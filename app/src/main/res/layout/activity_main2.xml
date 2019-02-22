@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+
+    <org.cryse.widget.persistentsearch.PersistentSearchView
+        android:id="@+id/searchview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:elevation="4dp"
+
+        app:persistentSV_searchTextColor="?android:textColorPrimary"
+        app:persistentSV_editTextColor="?android:textColorPrimary"
+        app:persistentSV_editHintText="Search"
+        app:persistentSV_editHintTextColor="?android:textColorHint"
+        app:persistentSV_displayMode="toolbar"
+        app:persistentSV_homeButtonMode="arrow"
+        app:persistentSV_searchCardElevation="2dp"
+        app:persistentSV_customToolbarHeight="64dp"/>
+
+
+    <LinearLayout android:visibility="gone"
+    android:id="@+id/search_error_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:layout_marginTop="45dp"
+        android:layout_gravity="center"
+        android:background="@drawable/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="#000"
+        android:textSize="22sp"
+        android:text="Sorry No Results Found"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/rlll"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_search_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="4dp"
+
+        android:elevation="2dp"
+        android:background="#FFFFFF"
+        android:visibility="gone"/>
+    <View
+        android:id="@+id/view_search_tint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="2dp"
+        android:visibility="gone"
+        android:background="#88000000"
+        android:alpha="0.0"
+        android:layerType="hardware"/>
+
+
+
+</RelativeLayout>
+</LinearLayout>

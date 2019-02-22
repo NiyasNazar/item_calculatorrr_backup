@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<LinearLayout
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="2dp"
+    android:id="@+id/ask"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:scaleType="fitXY"
+        android:id="@+id/dialog_imv"
+        android:src="@drawable/timthumb"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+<LinearLayout
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="35dp"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/itemq"
+        android:text="full"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <TextView
+        android:text="@string/Rs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="3dp"
+            android:id="@+id/dialog_item_price"
+            android:text="Price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/imvplus"
+android:src="@drawable/ic_action_addq"
+               android:background="@drawable/ed_search_bg"
+android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+            <TextView
+
+                android:layout_marginTop="3dp"
+                android:id="@+id/tvqua"
+        android:gravity="center"
+                android:background="@drawable/ed_search_bg"
+android:text="0"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+            <ImageView
+                android:layout_marginTop="3dp"
+android:background="@drawable/ed_search_bg"                android:id="@+id/imvminus"
+android:src="@drawable/ic_action_removeq"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:layout_weight="1"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/btn_alert_dialog_confirm"
+        android:layout_gravity="center"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/login_btn"
+        android:text="Add"
+
+        android:textSize="12sp"
+        android:textColor="#FFF"
+        android:layout_width="0dp"
+        android:layout_height="110dp" />
+
+</LinearLayout>
+<TextView
+    android:layout_marginLeft="5dp"
+    android:id="@+id/dialog_item_name"
+    android:textColor="#000"
+android:layout_below="@+id/ask"
+  android:text="poroyya"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+
+
+
+
+</RelativeLayout>

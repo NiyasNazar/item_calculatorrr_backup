@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/containers"
+
+android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    tools:context=".Final_bill_view">
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/error_layout"
+       android:layout_marginTop="45dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/tx"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="5dp"
+
+        android:background="@drawable/empty_cart_retina"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <TextView
+
+        android:layout_marginTop="25dp"
+android:gravity="center"
+        android:textSize="28sp"
+
+        android:text="You dont have any items for generating bill! "
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_go_back"
+            android:textColor="#FFFFFF"
+            android:text="Go Back"
+           android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="42dp" />
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/mainlayout"
+
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+<TextView
+    android:id="@+id/tvs"
+    android:layout_centerHorizontal="true"
+    android:text="Final Bill"
+    android:textStyle="normal"
+    android:textColor="#000"
+    android:textSize="36sp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_below="@id/tvs"
+        android:layout_marginTop="0dp"
+        android:id="@+id/lltbl"
+        android:visibility="visible"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/login_btn"
+            android:layout_weight="1"
+            android:text="Print"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/login_btn"
+            android:id="@+id/btn_share_bill"
+            android:layout_weight="1"
+            android:text="Share"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <TableLayout
+        android:layout_below="@+id/lltbl"
+        android:layout_marginTop="10dp"
+        android:id="@+id/table_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/table_row1"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/name"
+                android:fontFamily="serif"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:textColor="#000"
+                android:text="Item"/>
+            <TextView
+                android:id="@+id/age"
+                android:textColor="#000"
+                android:fontFamily="serif"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Qty"/>
+            <TextView
+                android:textColor="#000"
+                android:id="@+id/position"
+                android:fontFamily="serif"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Rate"/>
+            <TextView
+                android:textColor="#000"
+                android:id="@+id/address"
+                android:fontFamily="serif"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Amount"/>
+
+        </TableRow>
+
+        <View
+            android:layout_height="3dip"
+            android:layout_width="match_parent"
+            android:background="#ff0000"/>
+
+    </TableLayout>
+
+
+    // add a listview to display our table records
+    <ListView
+        android:layout_below="@id/table_layout"
+
+
+        android:id="@+id/records_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+    </ListView>
+    <LinearLayout
+        android:orientation="vertical"
+android:background="#02D09D"
+        android:id="@+id/llb"
+        android:layout_alignParentBottom="true"
+android:layout_marginBottom="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableLayout
+android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+
+            android:id="@+id/tt"
+android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:layout_below="@id/records_view"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TableRow
+
+                android:layout_height="wrap_content"
+                android:layout_width="50dp">
+                <TextView
+                    android:textSize="22sp"
+                    android:textColor="#FFFFFF"
+android:textStyle="bold"
+                    android:fontFamily="serif"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:text="Total"/>
+                <TextView
+         android:textSize="20sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginRight="3dp"
+                    android:fontFamily="serif"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_weight="0"
+
+                    android:text="@string/Rs"/>
+                <TextView
+                    android:textSize="22sp"
+                    android:id="@+id/tvtotalprice"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginRight="3dp"
+                    android:fontFamily="serif"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_weight="0"
+                    android:text="500"/>
+            </TableRow>
+
+
+
+
+        </TableLayout>
+        <Button
+
+
+            android:id="@+id/btn_sale"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
+            android:textColor="#FFFFFF"
+            android:layout_above="@id/llb"
+            android:background="#fec832"
+            android:layout_weight="1"
+            android:text="Save"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+
+
+        <LinearLayout
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="#FFFFFF"
+                android:text="Cash Recieved"
+                android:textAllCaps="true"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#FFFFFF"
+                android:padding="3dp"
+                android:layout_weight="2"
+                android:id="@+id/ed_enter_balance"
+                android:layout_marginLeft="5dp"
+                android:inputType="number"
+
+                android:layout_width="match_parent"
+                android:layout_height="35dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:text="BILL AMOUNT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:focusable="false"
+
+                android:cursorVisible="false"
+                android:inputType="none"
+                android:backgroundTint="#FFFFFF"
+                android:id="@+id/totalz"
+                android:layout_marginLeft="5dp"
+               android:text="1500"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="19sp"
+
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:text="BALANCE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+             <EditText
+                 android:focusable="false"
+                 android:textSize="19sp"
+
+                 android:cursorVisible="false"
+                 android:inputType="none"
+            android:backgroundTint="#FFFFFF"
+                android:gravity="center"
+                android:layout_weight="2"
+                android:id="@+id/tv_balance"
+                android:textColor="#FFFFFF"
+                android:layout_gravity="center"
+android:text="0.00"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
+</RelativeLayout>
+
+
