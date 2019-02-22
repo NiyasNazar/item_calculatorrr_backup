@@ -49,6 +49,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -189,6 +191,7 @@ EditText Viewbalance;
             public void onClick(View view) {
  linearLayout.setVisibility(View.GONE);
                 bitmap = ScreenshotUtils.getScreenShot(relativeLayout);
+                storeImage(bitmap);
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View alertLayout = inflater.inflate(R.layout.add_contacts, null);
 
@@ -272,35 +275,7 @@ EditText Viewbalance;
         });
     }
 
-    private void onClickApp(String pack, Bitmap bitmap) {
-        PackageManager pm = getPackageManager();
-        try {
 
-
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-
-
-       /* String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title", null);
-        Uri imageUri = Uri.parse(path);*/
-
-            @SuppressWarnings("unused")
-            PackageInfo info = pm.getPackageInfo(pack, PackageManager.GET_META_DATA);
-
-            Intent waIntent = new Intent(Intent.ACTION_SEND);
-            waIntent.setType("text/plain");
-            waIntent.setPackage(pack);
-            //  waIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
-            // waIntent.setDataAndType(contentUri, getContentResolver().getType(contentUri));
-            //  waIntent.putExtra(android.content.Intent.EXTRA_STREAM, contentUri);
-            waIntent.putExtra(Intent.EXTRA_TEXT, pack);
-            waIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivity(Intent.createChooser(waIntent, "Share with"));
-        } catch (Exception e) {
-            Log.e("Error on sharing", e + " ");
-            Toast.makeText(getApplicationContext(), "App not Installed" + e, Toast.LENGTH_SHORT).show();
-        }
-    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0) {
@@ -494,6 +469,50 @@ String smsNumber="91"+smsNumbe;
 
 
     }
+
+    private void storeImage(Bitmap image) {
+        File pictureFile = getOutputMediaFile();
+        if (pictureFile == null) {
+            Log.d("TAG",
+                    "Error creating media file, check storage permissions: ");// e.getMessage());
+            return;
+        }
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.d("TAG", "File not found: " + e.getMessage());
+        } catch (IOException e) {
+            Log.d("TAG", "Error accessing file: " + e.getMessage());
+        }
+    }
+
+    private  File getOutputMediaFile(){
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                + "/Android/data/"
+                + getApplicationContext().getPackageName()
+                + "/Files");
+
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                return null;
+            }
+        }
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
+        File mediaFile;
+        String mImageName="MI_"+ timeStamp +".jpg";
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
+        return mediaFile;
+    }
+
 
 }
 
