@@ -50,6 +50,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -76,6 +77,7 @@ public class Final_bill_view extends AppCompatActivity {
     ImageView imss;
     int total = 0;
     Button sales;
+    MediaScannerConnection    msConn;
     EditText Enter_balance,etUsername,etEmail;
 EditText Viewbalance;
 
@@ -89,6 +91,7 @@ EditText Viewbalance;
         sales.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
             /*  dbManager.CreateDynamicTablesmysales();*/
             dbManager.insertosales();
                 dbManager.deletetable();
@@ -191,7 +194,15 @@ EditText Viewbalance;
             public void onClick(View view) {
  linearLayout.setVisibility(View.GONE);
                 bitmap = ScreenshotUtils.getScreenShot(relativeLayout);
-                storeImage(bitmap);
+                savePhoto(bitmap);
+                Log.i("mass","saving");
+                if (bitmap!=null){
+                    Toast.makeText(getApplicationContext(),"notnull",Toast.LENGTH_SHORT).show();
+
+                }else {
+                    Toast.makeText(getApplicationContext(),"null",Toast.LENGTH_SHORT).show();
+                }
+              //  storeImage(bitmap);
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View alertLayout = inflater.inflate(R.layout.add_contacts, null);
 
@@ -437,12 +448,12 @@ String smsNumber="91"+smsNumbe;
 
             boolean isWhatsappInstalled = whatsappInstalledOrNot("com.whatsapp");
             if (isWhatsappInstalled) {
-                String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "title", null);
-                Uri bitmapUri = Uri.parse(bitmapPath);
+            /*    String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "title", null);
+                Uri bitmapUri = Uri.parse(bitmapPath);*/
                 Intent sendIntent = new Intent("android.intent.action.MAIN");
                 sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
                 sendIntent.putExtra("jid", PhoneNumberUtils.stripSeparators(smsNumber) + "@s.whatsapp.net");//phone number without "+" prefix
-                sendIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+              //  sendIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
                 startActivityForResult(sendIntent, 0);
             } else {
                 Uri uri = Uri.parse("market://details?id=com.whatsapp");
@@ -512,7 +523,57 @@ String smsNumber="91"+smsNumbe;
         mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
         return mediaFile;
     }
+    public void savePhoto(Bitmap bmp)
+    {
+       File imageFileFolder = new File(Environment.getExternalStorageDirectory(),"Rotate");
+        imageFileFolder.mkdir();
+        FileOutputStream out = null;
+        Calendar c = Calendar.getInstance();
+        String date = fromInt(c.get(Calendar.MONTH))
+                + fromInt(c.get(Calendar.DAY_OF_MONTH))
+                + fromInt(c.get(Calendar.YEAR))
+                + fromInt(c.get(Calendar.HOUR_OF_DAY))
+                + fromInt(c.get(Calendar.MINUTE))
+                + fromInt(c.get(Calendar.SECOND));
+      File  imageFileName = new File(imageFileFolder, date.toString() + ".jpg");
+        try
+        {
+            out = new FileOutputStream(imageFileName);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+            scanPhoto(imageFileName.toString());
+            out = null;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
+
+    public String fromInt(int val)
+    {
+        return String.valueOf(val);
+    }
+
+
+    public void scanPhoto(final String imageFileName)
+    {
+          msConn = new MediaScannerConnection(Final_bill_view.this,new MediaScannerConnection.MediaScannerConnectionClient()
+        {
+            public void onMediaScannerConnected()
+            {
+                msConn.scanFile(imageFileName, null);
+                Log.i("Utility","connection established");
+            }
+            public void onScanCompleted(String path, Uri uri)
+            {
+                msConn.disconnect();
+                Log.i(" Utility","scan completed");
+            }
+        });
+        msConn.connect();
+    }
 
 }
 
