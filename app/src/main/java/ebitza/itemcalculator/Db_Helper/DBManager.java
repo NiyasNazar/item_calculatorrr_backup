@@ -679,4 +679,14 @@ public class DBManager {
 
     }
 
+    public void clearsales() {
+        database = dbHelper.getWritableDatabase();
+        String sql = "DELETE FROM MYSALES WHERE dates <= date('now','-30 day')";
+        database.execSQL(sql);
+        database.close();
+
+    }
+
+
+
 }

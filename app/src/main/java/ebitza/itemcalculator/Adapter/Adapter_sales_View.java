@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ebitza.itemcalculator.Models.Model_bill;
@@ -19,6 +20,7 @@ import ebitza.itemcalculator.R;
 public  class Adapter_sales_View extends BaseAdapter {
     private Context recordContext;
     private List<Model_sales> recordList;
+    private static ArrayList<View> mPrintView = new ArrayList<>();
 
     public Adapter_sales_View(Context context, List<Model_sales> records) {
         recordList = records;
@@ -80,5 +82,8 @@ public  class Adapter_sales_View extends BaseAdapter {
         public TextView ageView;
         public TextView addressView;
         public TextView addressdates;
+    }
+    public static ArrayList<View> getPrintView() {
+        return mPrintView;
     }
 }

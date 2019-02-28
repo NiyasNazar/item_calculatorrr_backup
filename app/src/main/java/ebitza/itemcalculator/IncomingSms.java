@@ -44,7 +44,7 @@ public class IncomingSms  extends BroadcastReceiver
               String  finalDateString = formatters.format(calendar.getTime());
                 //Check here sender is yours
                 Log.i("smss", sms_str);
-                if (Sender.equals("+917012297229")) {
+                if (Sender.equals("+919048765852")) {
 /*
                     +919048765852
 */

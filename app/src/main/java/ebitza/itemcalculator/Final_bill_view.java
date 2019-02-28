@@ -76,7 +76,7 @@ public class Final_bill_view extends AppCompatActivity {
     RelativeLayout mainLa;
     ImageView imss;
     int total = 0;
-    Button sales;
+    Button sales,screensave;
     MediaScannerConnection    msConn;
     EditText Enter_balance,etUsername,etEmail;
 EditText Viewbalance;
@@ -104,6 +104,18 @@ EditText Viewbalance;
         final ProgressDialog pd = new ProgressDialog(Final_bill_view.this);
         pd.setMessage("Processing ...");
         relativeLayout = (RelativeLayout) findViewById(R.id.containers);
+        screensave=(Button)findViewById(R.id.btn_screen);
+        screensave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                linearLayout.setVisibility(View.GONE);
+                bitmap = ScreenshotUtils.getScreenShot(relativeLayout);
+                savePhoto(bitmap);
+                Intent is =new Intent(getApplicationContext(),Final_bill_view.class);
+                startActivity(is);
+                finish();
+            }
+        });
         mainLa = (RelativeLayout) findViewById(R.id.mainlayout);
         eroorLayout = (LinearLayout) findViewById(R.id.error_layout);
         Button go_back = (Button) findViewById(R.id.btn_go_back);
@@ -197,10 +209,10 @@ EditText Viewbalance;
                 savePhoto(bitmap);
                 Log.i("mass","saving");
                 if (bitmap!=null){
-                    Toast.makeText(getApplicationContext(),"notnull",Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getApplicationContext(),"notnull",Toast.LENGTH_SHORT).show();
 
                 }else {
-                    Toast.makeText(getApplicationContext(),"null",Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getApplicationContext(),"null",Toast.LENGTH_SHORT).show();
                 }
               //  storeImage(bitmap);
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);

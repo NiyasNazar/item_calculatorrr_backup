@@ -35,8 +35,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 <Button
+    android:layout_weight="1"
     android:layout_marginTop="10dp"
     android:textColor="#FFFFFF"
     android:background="@drawable/login_btn"
@@ -46,6 +51,19 @@
     android:text="View"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
+        <Button
+            android:layout_weight="1"
+
+            android:layout_marginTop="10dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/login_btn"
+            android:id="@+id/btn_sales_export"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:text="Backup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
     <TableLayout
         android:layout_below="@+id/lltbl"
         android:layout_marginTop="10dp"

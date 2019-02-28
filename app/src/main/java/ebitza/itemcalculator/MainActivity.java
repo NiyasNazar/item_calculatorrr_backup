@@ -78,6 +78,27 @@ Toast.makeText(getApplicationContext(),"sts"+status,Toast.LENGTH_SHORT).show();
         dbManager=new DBManager(getApplicationContext());
         dbManager.open();
       dbManager.CreateDynamicTablesmysales();
+
+        SimpleDateFormat formatters = new SimpleDateFormat(" yyyy-MM");
+        SimpleDateFormat formatted = new SimpleDateFormat(" yyyy-MM-dd");
+        Date dated = new Date();
+        /*System.out.println(formatter.format(date));*/
+      String   current_date=formatted.format(dated);
+
+
+      String clearsaledate=formatters.format(dated);
+        String cleardate=clearsaledate+"-"+"04";
+      if (current_date.equals(cleardate)){
+          dbManager.clearsales();
+          Log.i("cleardate",cleardate);
+          Log.i("cleardate",current_date);
+      }
+
+
+
+
+
+
       //  isWriteStoragePermissionGranted();
         Intent is=getIntent();
         if (getIntent().getExtras()!=null) {
@@ -133,7 +154,9 @@ String notidate=setdate+"-"+a;
 
        /// if (status.equals("Yes")) {
 
-        String W_status=dbManager.getwarningstatus();
+       String W_status=dbManager.getwarningstatus();
+     // String W_status="Yes";
+
         Log.i("Warning",W_status);
         if (W_status.equals("Yes")) {
             if (!current_time.equals(launchdate)) {

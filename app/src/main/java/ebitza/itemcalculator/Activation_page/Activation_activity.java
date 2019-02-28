@@ -130,7 +130,7 @@ if (isSMSPermissionGranted()) {
         try {
             Uri uri = Uri.parse(SMS_URI_INBOX);
             String[] projection = new String[]{"_id", "address", "person", "body", "date", "type"};
-            Cursor cur = getContentResolver().query(uri, projection, "address='+917012297229'", null, "date asc");
+            Cursor cur = getContentResolver().query(uri, projection, "address='+919048765852'", null, "date asc");
             if (cur.moveToFirst()) {
                 int index_Address = cur.getColumnIndex("address");
                 int index_Person = cur.getColumnIndex("person");
