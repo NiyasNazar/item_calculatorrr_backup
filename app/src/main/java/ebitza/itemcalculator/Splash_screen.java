@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -49,6 +50,7 @@ public class Splash_screen extends AppCompatActivity {
                         Log.i("version","notoreo");
                         Toast.makeText(getApplicationContext(),"notoreo",Toast.LENGTH_SHORT).show();
                    requestSmsPermission();
+//requestSmsPermissions();
 
 
                     }else{
@@ -64,6 +66,8 @@ public class Splash_screen extends AppCompatActivity {
                 } else {
                     if (activated) {
                         Log.i("through", "through");
+
+
                         Intent is = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(is);
                         finish();
@@ -93,6 +97,24 @@ public class Splash_screen extends AppCompatActivity {
 
 
     }
+    private void requestSmsPermissions() {
+
+        String permission = Manifest.permission.SEND_SMS;
+        int grant = ContextCompat.checkSelfPermission(this, permission);
+        if (grant != PackageManager.PERMISSION_GRANTED) {
+            String[] permission_list = new String[1];
+            permission_list[0] = permission;
+            ActivityCompat.requestPermissions(this, permission_list, 9);
+        }
+
+
+
+    }
+
+
+
+
+
 
     private boolean isSMSPermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -144,6 +166,22 @@ public class Splash_screen extends AppCompatActivity {
                         finish();
                     } else {
                         // progress.dismiss();
+
+                }
+                break;
+
+            case 9:
+
+                Log.d(TAG, "External storage1");
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.v(TAG, "Permission: " + permissions[0] + "was " + grantResults[0]);
+                    //resume tasks needing this permission
+                    // SharePdfFile();
+                    Intent is=new Intent(getApplicationContext(), Activation_activity.class);
+                    startActivity(is);
+                    finish();
+                } else {
+                    // progress.dismiss();
 
                 }
                 break;

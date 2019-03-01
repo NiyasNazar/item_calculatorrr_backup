@@ -1,6 +1,7 @@
 package ebitza.itemcalculator;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,10 +32,14 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import ebitza.itemcalculator.Db_Helper.DBManager;
 
@@ -43,9 +48,11 @@ String TAG="TAG";
     String table_name;
     SharedPreferences prefs = null;
     SharedPreferences prefs1 = null;
+    SharedPreferences prefsexpiry = null;
     Calendar alarmcalendar;
     String current_time;
     String status;
+
     ImageView search;
 DBManager dbManager;
     @Override
@@ -53,6 +60,7 @@ DBManager dbManager;
         super.onCreate(savedInstanceState);
         prefs = getSharedPreferences("myAppName", MODE_PRIVATE);
         prefs1 = getSharedPreferences("warning", MODE_PRIVATE);
+        prefsexpiry= getSharedPreferences("activation", MODE_PRIVATE);
 
         setContentView(R.layout.activity_main);
         checkcontactspermisiion();
@@ -134,6 +142,38 @@ Toast.makeText(getApplicationContext(),"sts"+status,Toast.LENGTH_SHORT).show();
         Log.i("times",formatter.format(date));
 
         current_time=formatter.format(date);
+        String expiry =prefsexpiry.getString("expDate",null);
+       // Log.i("expiry",expiry);
+
+
+       // docheckexpiry(date.toString(),expiry);
+
+
+
+
+  if (expiry!=null){
+      Calendar cal = Calendar.getInstance();
+      SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd hh:mm:ss 'GMT'Z yyyy");
+    Date curr=cal.getTime();
+      try {
+Date exp=dateFormat.parse(expiry);
+docheckexpiry(curr,exp);
+      } catch (ParseException e) {
+          e.printStackTrace();
+      }
+
+
+        }
+
+
+      /*  if(date.after(expirys)){
+            Log.i("prefernce","loadp");
+            final SharedPreferences reader = getSharedPreferences("activation", Context.MODE_PRIVATE);
+            final SharedPreferences.Editor editor = reader.edit();
+            editor.putBoolean("is_first", false);
+            editor.apply();
+        }*/
+
         SimpleDateFormat formatter2 = new SimpleDateFormat(" yyyy-MM");
         Date date2 = new Date();
         /*System.out.println(formatter.format(date));*/
@@ -445,9 +485,44 @@ public void reminder(){
 
 }
 
+public void docheckexpiry(Date date, Date expirys){
+    Log.i("expiry",expirys.toString());
+    Log.i("expiry",date.toString());
+    if(date.after(expirys)){
+        expiryalert();
+        Log.i("prefernce","expired");
+        final SharedPreferences reader = getSharedPreferences("activation", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = reader.edit();
+        editor.putBoolean("is_first", false);
+        editor.apply();
+
+        prefsexpiry.edit().remove("expDate").apply();
+
+
+    }
+
+}
+
+
+    public void expiryalert(){
+
+        //  Log.i("timesss",prefs.getString("launch",null));
+        AlertDialog.Builder b = new AlertDialog.Builder(MainActivity.this);
+        b.setMessage("Item Calculator Trial version Will expire Today");
+        b.setCancelable(false);
+        b.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        b.setTitle("Trial");
+        AlertDialog ad = b.create();
+        ad.show();
 
 
 
+
+    }
 
 
 

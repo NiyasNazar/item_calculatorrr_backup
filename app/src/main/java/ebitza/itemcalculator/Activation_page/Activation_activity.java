@@ -17,13 +17,23 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
+
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import ebitza.itemcalculator.MainActivity;
 import ebitza.itemcalculator.MyPreferences;
@@ -43,15 +53,16 @@ public class Activation_activity extends AppCompatActivity {
         setContentView(R.layout.activity_activation_activity);
 
         isSMSPermissionGranted();
+        checksmsspermisiion();
 
+        progress = new ProgressDialog(Activation_activity.this) {
+            @Override
+            public void onBackPressed() {
+                //progress.dismiss();
+                Activation_activity.this.finish();
 
-   progress = new ProgressDialog(Activation_activity.this){
-        @Override
-        public void onBackPressed() {
-            //progress.dismiss();
-            Activation_activity.this.finish();
-
-        }};
+            }
+        };
 
 
         progress.setTitle("Item Calculator Activation");
@@ -59,16 +70,16 @@ public class Activation_activity extends AppCompatActivity {
         progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
         progress.show();
 // To dismiss the dialog
-       // progress.dismiss();
+        // progress.dismiss();
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         /*System.out.println(formatter.format(date));*/
 
-        Log.i("times",formatter.format(date));
+        Log.i("times", formatter.format(date));
 
-    current_time=formatter.format(date);
-       // Check_message(current_time);
+        current_time = formatter.format(date);
+        // Check_message(current_time);
         final Handler handler = new Handler();
         final int delay = 3000; //milliseconds
 
@@ -86,38 +97,16 @@ public class Activation_activity extends AppCompatActivity {
         Check_message(current_time);
     }*/
 
-if (isSMSPermissionGranted()) {
-/*    Check_message(current_time);*/
-    Log.i("currentdate",current_time);
-}
-        Log.i("currentdate",current_time);
-       // Log.i("final",finalDateString);
-        Toast.makeText(getApplicationContext(),"hcurrentdateai"+current_time,Toast.LENGTH_SHORT).show();
-     Toast.makeText(getApplicationContext(),"final"+finalDateString,Toast.LENGTH_SHORT).show();
-
-/*if (!strbody.equals("")) {
-   // check(current_time, strbody);
-}*/
+        if (isSMSPermissionGranted()) {
+            /*    Check_message(current_time);*/
+            Log.i("currentdate", current_time);
         }
+        Log.i("currentdate", current_time);
+        // Log.i("final",finalDateString);
+        Toast.makeText(getApplicationContext(), "hcurrentdateai" + current_time, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "final" + finalDateString, Toast.LENGTH_SHORT).show();
 
-
-
-
-
-
-
-
- /*   private final Runnable m_Runnable = new Runnable()
-    {
-        public void run()
-
-        {
-            Toast.makeText(getApplicationContext(),"in runnable",Toast.LENGTH_SHORT).show();
-
-            Activation_activity.this.mHandler.postDelayed(m_Runnable, 5000);
-        }
-
-    };*/
+    }
 
 
 
@@ -209,7 +198,11 @@ if (isSMSPermissionGranted()) {
                 Log.i("sss",finalDateString);
                 Toast.makeText(getApplicationContext(),"te"+finalDateString,Toast.LENGTH_SHORT).show();
                 if (ms.equals("ACTIVATEIC")){
-                check(current_time,ms);}else{
+                check(current_time,ms);
+                }else if(ms.equals("DEMOIC")){
+                    check(current_time,ms);
+                }
+                else{
                     Log.i("sss","notthatone");
 
                 }
@@ -241,13 +234,58 @@ if (isSMSPermissionGranted()) {
                 Intent is = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(is);
                 finish();
+              SmsManager sm = SmsManager.getDefault();
+                sm.sendTextMessage("+919048765852", null, "Activated", null, null);
 
                 final SharedPreferences reader = getSharedPreferences("activation", Context.MODE_PRIVATE);
                 final SharedPreferences.Editor editor = reader.edit();
                 editor.putBoolean("is_first", true);
                 editor.apply();
                 progress.dismiss();
-            }else{
+            }else if (strbodys.equals("DEMOIC")) {
+                SmsManager sm = SmsManager.getDefault();
+                sm.sendTextMessage("+919048765852", null, "Activated", null, null);
+
+                Log.i("prefernce","Demo");
+
+                final SharedPreferences reader = getSharedPreferences("activation", Context.MODE_PRIVATE);
+                final SharedPreferences.Editor editor = reader.edit();
+                editor.putBoolean("is_first", true);
+
+                Date startdate = null;
+                SimpleDateFormat formats = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    startdate = formats.parse(finalDateString);
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                
+
+                
+                Calendar c = Calendar.getInstance();
+                c.setTime(startdate);
+                c.add(Calendar.DATE, 30);
+                Date expDate = c.getTime();
+String  expDates=formats.format(expDate);
+
+
+                editor.putBoolean("is_first", true);
+                editor.putString("expDate",expDate.toString());
+                Log.i("prefernce",expDates);
+                Log.i("prefernce",expDate.toString());
+                editor.apply();
+                Intent is = new Intent(getApplicationContext(), MainActivity.class);
+
+                startActivity(is);
+
+                finish();
+                progress.dismiss();
+
+            }
+
+
+            else{
                 Log.i("prefernce","loadp");
                 final SharedPreferences reader = getSharedPreferences("activation", Context.MODE_PRIVATE);
                 final SharedPreferences.Editor editor = reader.edit();
@@ -319,6 +357,35 @@ if (isSMSPermissionGranted()) {
         }
     }
 
+    private void checksmsspermisiion() {
+        Dexter.withActivity(this)
+                .withPermissions(
+                        Manifest.permission.SEND_SMS,
+                        Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        // check if all permissions are granted
+                        if (report.areAllPermissionsGranted()) {
+                            // do you work now
+                        }
 
+                        // check for permanent denial of any permission
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                            // permission is denied permenantly, navigate user to app settings
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                })
+                .onSameThread()
+                .check();
+
+
+
+    }
 
 }
