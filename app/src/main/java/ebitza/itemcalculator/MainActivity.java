@@ -186,7 +186,7 @@ String notidate=setdate+"-"+a;
         String notidate3=setdate+"-"+"03";
 
         Log.i("timessssssaa",notidate1);
-        Toast.makeText(getApplicationContext(),"tt"+notidate,Toast.LENGTH_SHORT).show();
+      /*  Toast.makeText(getApplicationContext(),"tt"+notidate,Toast.LENGTH_SHORT).show();*/
 
 
         String launchdate=prefs.getString("launch",null);

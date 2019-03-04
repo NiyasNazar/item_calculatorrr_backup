@@ -239,15 +239,32 @@ if ("Edit".equals(options[which])){
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
+
+
+
                     String itemname1 = etUsername.getText().toString();
                     String quantity1 = etEmail.getText().toString();
                     String price1 = etEmails.getText().toString();
-                    dbManager.updateitems(tb_names,itemid,itemname1,price1,quantity1);
 
-                    Intent is=new Intent(mcontext, MainActivity.class);
-                    mcontext.startActivity(is);
-                    ((MainActivity)mcontext).finish();
-                    dialogs.dismiss();
+                    if (!itemname1.matches("[0-9a-zA-Z.? ]*")) {
+
+                        etUsername.setError("Special characters not allowed");
+
+                    }else  if (!quantity1.matches("[0-9a-zA-Z.? ]*")) {
+
+                        etEmail.setError("Special characters not allowed");
+
+                    }else {
+
+
+                        dbManager.updateitems(tb_names, itemid, itemname1, price1, quantity1);
+
+                        Intent is = new Intent(mcontext, MainActivity.class);
+                        mcontext.startActivity(is);
+                        ((MainActivity) mcontext).finish();
+                        dialogs.dismiss();
+                    }
+
                 }
             }, delayInMillis);
 

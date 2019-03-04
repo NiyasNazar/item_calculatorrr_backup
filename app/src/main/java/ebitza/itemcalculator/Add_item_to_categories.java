@@ -58,7 +58,7 @@ public class Add_item_to_categories extends AppCompatActivity {
                 String Itemsname = item_name.getText().toString();
                 String Itemprice = item_price.getText().toString();
                 String Itemquantity=item_quantity.getText().toString();
-                if (!Itemsname.matches("[a-zA-Z.? ]*")) {
+                if (!Itemsname.matches("[0-9a-zA-Z.? ]*")) {
 
                     item_name.setError("Special characters not allowed");
 
