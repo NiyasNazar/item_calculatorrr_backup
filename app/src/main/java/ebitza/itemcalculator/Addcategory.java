@@ -48,7 +48,7 @@ public class Addcategory extends AppCompatActivity implements View.OnClickListen
             case R.id.add_record:
 
                 final String name = categoryEditText.getText().toString();
-                if (!name.matches("[a-zA-Z? ]*")) {
+                if (!name.matches("[0-9a-zA-Z? ]*")) {
 
                     categoryEditText.setError("Special characters not allowed");
 

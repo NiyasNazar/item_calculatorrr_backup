@@ -25,7 +25,9 @@ import ebitza.itemcalculator.Search_views.SearchResult;
 
 public class DBManager {
     private DatabaseHelper dbHelper;
-
+    String CID = "itemid";
+    String DName = "username";
+    String PName = "password";
     private Context context;
 
     private SQLiteDatabase database;
@@ -111,12 +113,14 @@ public class DBManager {
     public void CreateDynamicTables(String Table_Name) {
         String name2 = Table_Name.replaceAll("\\s+", "");
 
-
+/*
         String CID = "itemid";
         String DName = "item_name";
         String PName = "item_price";
+        String KEY_IMAGE = "key_image";*/
         String KEY_IMAGE = "key_image";
         String KEY_Quantity = "key_quantity";
+
 
         database = dbHelper.getWritableDatabase();
         // database.execSQL("DROP TABLE IF EXISTS " + Table_Name);
@@ -686,6 +690,79 @@ public class DBManager {
         database.close();
 
     }
+
+    public void Createlogin() {
+       String name2="login";
+
+
+        String CID = "itemid";
+        String DName = "username";
+        String PName = "password";
+        String KEY_IMAGE = "key_image";
+        String KEY_Quantity = "key_quantity";
+
+        database = dbHelper.getWritableDatabase();
+        // database.execSQL("DROP TABLE IF EXISTS " + Table_Name);
+        String query = "CREATE TABLE IF NOT EXISTS " + name2 + "(" + CID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DName + " TEXT, " + PName + " TEXT);";
+        database.execSQL(query);
+       /* database = dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(CID, Contact_ID);
+        cv.put(DName, Display_Name);
+        database.insert(Table_Name, null, cv);*/
+        // database.close();
+    }
+    public void inserttlogin() {
+        database = dbHelper.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put("username","ebitza");
+        cv.put("password", "ebitza@admin");
+
+        database.insert("SEARCHHISTORY", null, cv);
+        database.close();
+
+
+    }
+    public boolean checkUser(String email, String password) {
+
+        // array of columns to fetch
+        String[] columns = {
+                CID
+        };
+        database = dbHelper.getReadableDatabase();
+        // selection criteria
+        String selection = DName + " = ?" + " AND " + PName + " = ?";
+
+        // selection arguments
+        String[] selectionArgs = {email, password};
+
+        // query user table with conditions
+        /**
+         * Here query function is used to fetch records from user table this function works like we use sql query.
+         * SQL query equivalent to this query function is
+         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com' AND user_password = 'qwerty';
+         */
+        Cursor cursor = database.query("login", //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                       //filter by row groups
+                null);                      //The sort order
+
+        int cursorCount = cursor.getCount();
+
+        cursor.close();
+        database.close();
+        if (cursorCount > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+
 
 
 

@@ -230,7 +230,11 @@ if ("Edit".equals(options[which])){
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
+
             Log.i("TAG",tb_names);
+
+
+
             final ProgressDialog dialogs = new ProgressDialog(mcontext);
             dialogs.setMessage("Please wait.....");
             dialogs.show();
@@ -263,13 +267,14 @@ if ("Edit".equals(options[which])){
                         mcontext.startActivity(is);
                         ((MainActivity) mcontext).finish();
                         dialogs.dismiss();
+
                     }
 
                 }
             }, delayInMillis);
 
+            Toast.makeText(mcontext, "Updated Succesfully", Toast.LENGTH_SHORT).show();
 
-            Toast.makeText(mcontext, "Updated Succesfully"+tb_names, Toast.LENGTH_SHORT).show();
 
 
 

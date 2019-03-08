@@ -27,6 +27,8 @@ public class Splash_screen extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         dbManager=new DBManager(getApplicationContext());
         dbManager.open();
+        dbManager.Createlogin();
+        dbManager.inserttlogin();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

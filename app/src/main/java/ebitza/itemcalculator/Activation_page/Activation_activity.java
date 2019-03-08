@@ -19,6 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -35,6 +37,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import ebitza.itemcalculator.LOGIN;
 import ebitza.itemcalculator.MainActivity;
 import ebitza.itemcalculator.MyPreferences;
 import ebitza.itemcalculator.R;
@@ -47,11 +50,19 @@ public class Activation_activity extends AppCompatActivity {
     String TAG="s";
     Handler mHandler;
     String  current_time;
+    Button logins;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activation_activity);
-
+logins=(Button)findViewById(R.id.login);
+logins.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent is=new Intent(getApplicationContext(), LOGIN.class);
+        startActivity(is);
+    }
+});
         isSMSPermissionGranted();
         checksmsspermisiion();
 
@@ -67,7 +78,7 @@ public class Activation_activity extends AppCompatActivity {
 
         progress.setTitle("Item Calculator Activation");
         progress.setMessage("Waiting For Activation...");
-        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progress.setCancelable(true); // disable dismiss by tapping outside of the dialog
         progress.show();
 // To dismiss the dialog
         // progress.dismiss();
